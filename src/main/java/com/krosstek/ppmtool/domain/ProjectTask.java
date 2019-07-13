@@ -17,12 +17,17 @@ public class ProjectTask {
     private Integer priority;
     private Date dueDate;
     //ManyToOne with Backlog
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.REFRESH)
+    @JoinColumn(name="backlog_id" , nullable = false, updatable = false)
+    private BackLog backlog;
 
     @Column(updatable = false)
     private String projectIdentifer;
     private Date create_At;
     private Date update_At;
-
+    
+    
+   
     public ProjectTask() {
     }
 
@@ -105,7 +110,18 @@ public class ProjectTask {
     public void setUpdate_At(Date update_At) {
         this.update_At = update_At;
     }
-    @PrePersist
+    
+    
+    
+    public BackLog getBacklog() {
+		return backlog;
+	}
+
+	public void setBacklog(BackLog backlog) {
+		this.backlog = backlog;
+	}
+
+	@PrePersist
     protected void onCreate() {
     	this.create_At = new Date();
     }
