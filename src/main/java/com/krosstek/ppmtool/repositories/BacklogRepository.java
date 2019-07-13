@@ -8,4 +8,5 @@ import com.krosstek.ppmtool.domain.BackLog;
 
 @Repository
 public interface BacklogRepository extends CrudRepository<BackLog, Long> {
+	BackLog findByProjectIdentifier(String identifier);
 }
