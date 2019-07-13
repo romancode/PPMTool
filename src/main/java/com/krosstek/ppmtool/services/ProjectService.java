@@ -3,6 +3,7 @@ package com.krosstek.ppmtool.services;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.krosstek.ppmtool.domain.BackLog;
 import com.krosstek.ppmtool.domain.Project;
 import com.krosstek.ppmtool.exceptions.ProjectIdException;
 import com.krosstek.ppmtool.repositories.ProjectRepository;
@@ -17,6 +18,12 @@ public class ProjectService {
 		
 		try {
 			project.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			if(project.getId()==null) {
+				BackLog backLog = new BackLog();
+				project.setBackLog(backLog);
+				backLog.setProject(project);
+				backLog.setProjectIdentifier(project.getProjectIdentifier().toUpperCase());
+			}
 			return projectRepository.save(project);
 		} catch (Exception e) {
 			throw new ProjectIdException("Project Id '" + project.getProjectIdentifier().toUpperCase() + "' already exist!");
